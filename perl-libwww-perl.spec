@@ -1,6 +1,6 @@
 Name:           perl-libwww-perl
 Version:        5.833
-Release:        3%{?dist}
+Release:        5%{?dist}
 Summary:        A Perl interface to the World-Wide Web
 
 Group:          Development/Libraries
@@ -13,6 +13,12 @@ Patch0:         %{name}-5.833-CVE-2011-0633.patch
 # Disable hostname verification by default to restore 5.833 behaviour,
 # bug #745800.
 Patch1:         %{name}-5.833-Disable-ssl_verify-by-default.patch
+# Support HTTPS_CERT_FILE and HTTPS_KEY_FILE Net::SSL environment variables
+# with IO::Socket::SSL back-end, bug #1365490
+Patch2:         %{name}-5.833-Honor-HTTPS_CERT_FILE-and-HTTPS_KEY_FILE-for-IO-Sock.patch
+# Honor HTTPS_PROXY and https_proxy Net::SSL environment variables with
+# IO::Socket::SSL back-end by default, bug #1400632
+Patch3:         %{name}-5.833-Honor-HTTPS_PROXY-and-https_proxy-if-env_proxy-not-s.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -38,6 +44,8 @@ help you implement simple HTTP servers.
 %setup -q -n libwww-perl-%{version} 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 
 # Filter unwanted Provides:
@@ -115,6 +123,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Dec 02 2016 Petr Pisar <ppisar@redhat.com> - 5.833-5
+- Honor HTTPS_PROXY and https_proxy Net::SSL environment variables with
+  IO::Socket::SSL back-end by default (bug #1400632)
+
+* Tue Aug 30 2016 Petr Pisar <ppisar@redhat.com> - 5.833-4
+- Support HTTPS_CERT_FILE and HTTPS_KEY_FILE Net::SSL environment variables
+  with IO::Socket::SSL back-end (bug #1365490)
+
 * Tue Dec  8 2015 Petr Pisar <ppisar@redhat.com> - 5.833-3
 - Implement hostname verification that is disabled by default. You can install
   IO::Socket::SSL Perl module and set PERL_LWP_SSL_VERIFY_HOSTNAME=1
