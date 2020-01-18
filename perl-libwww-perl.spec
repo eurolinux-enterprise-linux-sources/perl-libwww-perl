@@ -1,6 +1,6 @@
 Name:           perl-libwww-perl
 Version:        6.05
-Release:        1.1%{?dist}
+Release:        2%{?dist}
 Summary:        A Perl interface to the World-Wide Web
 Group:          Development/Libraries
 License:        GPL+ or Artistic
@@ -113,6 +113,9 @@ make test
 %{_mandir}/man3/*.3*
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 6.05-2
+- Mass rebuild 2013-12-27
+
 * Mon Aug 05 2013 Petr Šabata <contyk@redhat.com> - 6.05-1.1
 - Add some missing build-time dependencies
 - Fix bogus dates in changelog
